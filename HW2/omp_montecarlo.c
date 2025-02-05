@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<math.h>
+#include<omp.h>
 
 #define MAX_NUM 100000
 
@@ -19,10 +20,10 @@ typedef struct
 } point;
 
 
-point generate_point()
+point generate_point(unsigned int seed)
 {
-    double rand_x = ((double)rand() / RAND_MAX) * MAX_NUM;
-    double rand_y = ((double)rand() / RAND_MAX) * MAX_NUM;
+    double rand_x = ((double)rand_r(&seed) / RAND_MAX) * MAX_NUM;
+    double rand_y = ((double)rand_r(&seed) / RAND_MAX) * MAX_NUM;
     point rand_point;
     rand_point.x = rand_x;
     rand_point.y = rand_y;
@@ -43,10 +44,12 @@ double monte_carlo(int iter_num)
     center.x = radius;
     center.y = radius;
     int count_in_circle = 0;
-
+    #pragma omp parallel for reduction(+:count_in_circle)
     for(int i = 0; i < iter_num; i++)
     {
-        point test_point = generate_point();
+        // printf("Thread number: %d\n", omp_get_thread_num());
+        unsigned int seed = (time(NULL) * 123456) + i + omp_get_thread_num();
+        point test_point = generate_point(seed);
         double distance = calc_dist(test_point, center);
         if(distance <= radius)
         {
@@ -60,12 +63,16 @@ double monte_carlo(int iter_num)
 int main()
 {
     double start, end, runtime;
-    int num_iterations;
+    int num_iterations, num_threads;
     printf("Enter number of ""dart throws"":  ");
     scanf("%d", &num_iterations);
+    printf("Enter number of threads:  ");
+    scanf("%d", &num_threads);
 
     start = CLOCK();
     srand(time(NULL));
+    omp_set_dynamic(0);
+    omp_set_num_threads(num_threads);
     double pi = monte_carlo(num_iterations);
     end = CLOCK();
 
