@@ -6,7 +6,7 @@
 #include<pthread.h>
 
 #define ARR_LEN 10000
-#define NUM_THREADS 8
+#define NUM_THREADS 32
 
 double CLOCK() 
 {

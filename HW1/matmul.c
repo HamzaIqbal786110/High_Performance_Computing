@@ -3,7 +3,7 @@
 #include <time.h>
  // This is to benchmark a memory bound program
 
-#define MAT_SIZE 1000
+#define MAT_SIZE 1500
 void matrix_multiply(u_int64_t **A, u_int64_t **B, u_int64_t **C, int n)
 {
     for(int i = 0; i < n; i++)
