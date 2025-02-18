@@ -21,7 +21,7 @@ void* philosopher(void *arg)
     int lork = philosopher_num;
     int rork = (philosopher_num + 1) % NUM_PHILOSOPHERS;
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < 12; i++)
     {
         switch(philosopher_num)
         {
@@ -46,7 +46,7 @@ void* philosopher(void *arg)
                 sleep(10);
                 break;
             default:
-                printf("Ma balls is hot - Jon Jones \n\n");
+                printf("Failed \n\n");
                 sleep(10);
                 break;
         }   
