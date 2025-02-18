@@ -4,6 +4,9 @@
 #include<stdint.h>
 #include<time.h>
 #include<math.h>
+#include<omp.h>
+#include<string.h>
+#include<x86intrin.h>
 
 
 #define BITSET_SIZE(N) (((N) + 7) / 8)
@@ -39,11 +42,39 @@ typedef struct
     uint8_t *bits;
 } bitset;
 
+typedef struct 
+{
+    uint64_t s[4]; // PRNG state
+} xoshiro256_state;
+
 double CLOCK() 
 {
     struct timespec t;
     clock_gettime(CLOCK_MONOTONIC, &t);
     return (t.tv_sec * 1000)+(t.tv_nsec*1e-6);
+}
+
+void seed_xoshiro256(xoshiro256_state *state, uint64_t seed) 
+{
+    for (int i = 0; i < 4; i++)
+        state->s[i] = seed = (seed ^ 0x9e3779b97f4a7c15) * 0xbf58476d1ce4e5b9;
+}
+
+uint32_t xoshiro256_next(xoshiro256_state *state) 
+{
+    uint64_t *s = state->s;
+    uint64_t result = (s[1] * 5) << 7;
+
+    uint64_t t = s[1] << 17;
+    s[2] ^= s[0];
+    s[3] ^= s[1];
+    s[1] ^= s[2];
+    s[0] ^= s[3];
+
+    s[2] ^= t;
+    s[3] = (s[3] << 45) | (s[3] >> (64 - 45));
+
+    return ((uint32_t)(result >> 32));
 }
 
 // Initialize a bitset
@@ -58,6 +89,7 @@ bitset *bitset_create(size_t num_bits)
 // Set a bit (add element)
 void bitset_add(bitset *b, uint32_t value) 
 {
+    #pragma omp atomic
     b->bits[value / 8] |= (1 << (value % 8));
 }
 
@@ -155,17 +187,6 @@ grph* generate_graph(uint32_t num_nodes, uint64_t num_edges) {
 
     bitset_destroy(edge_tracker); // Clean up
 
-    // // Step 3: Insert Extra Edges into Graph
-    // for (uint64_t i = 0; i < extra_edges; i++) {
-    //     uint32_t u = DECODE_U(sampled_edges[i]);
-    //     uint32_t v = DECODE_V(sampled_edges[i]);
-
-    //     graph->edges[edge_count++] = v;
-    //     graph->edges[edge_count++] = u;
-    //     graph->offsets[u + 1]++;
-    //     graph->offsets[v + 1]++;
-    // }
-
     // Step 4: Compute Prefix Sum for Offsets
     for (uint32_t i = 1; i <= num_nodes; i++) {
         graph->offsets[i] += graph->offsets[i - 1];
@@ -173,6 +194,7 @@ grph* generate_graph(uint32_t num_nodes, uint64_t num_edges) {
 
     return graph;
 }
+
 
 uint16_t find_degree(uint64_t node, grph* graph)
 {
@@ -189,12 +211,14 @@ int compare_nodes(const void *a, const void *b)
 void sort_nodes_by_degree(grph *graph, uint32_t *sorted_nodes)
 {
     nodeDegree node_degrees[graph->num_nodes];
+    #pragma omp parallel for
     for(uint32_t i = 0; i < graph->num_nodes; i++)
     {
         node_degrees[i].node = i;
         node_degrees[i].degree = find_degree(i, graph);
     }
     qsort(node_degrees, graph->num_nodes, sizeof(nodeDegree), compare_nodes);
+    #pragma omp paralel for
     for(uint32_t i = 0; i < graph->num_nodes; i++)
     {
         sorted_nodes[i] = node_degrees[i].node;
@@ -208,15 +232,6 @@ void add_neighbors_bitset(bitset *b, uint32_t node, grph* graph)
         bitset_add(b, graph->edges[i]);
     }
 }
-
-// bool check_edge(uint32_t node1, uint32_t node2, grph* graph)
-// {
-//     for(uint32_t i = graph->offsets[node1]; i < (graph->offsets[node1+1] - 1); i++)
-//     {
-//         if(graph->edges[i] == node2) return(true);
-//     }
-//     return(false);
-// }
 
 bool check_colored(grph* graph)
 {
@@ -239,6 +254,7 @@ uint16_t color_graph(grph* graph)
     {
         color++;
         bitset *visited_inner = bitset_create(graph->num_nodes);
+        #pragma omp parallel for
         for(uint32_t i = 0; i < graph->num_nodes; i++)
         {
             if(!graph->colors[sorted_nodes[i]] && !bitset_contains(visited, sorted_nodes[i]) && !bitset_contains(visited_inner, sorted_nodes[i]))
@@ -256,19 +272,22 @@ uint16_t color_graph(grph* graph)
     return(color);
 }
 
-
 int main()
 {
     
     uint32_t nodes;
     uint64_t edges;
+    uint16_t num_threads;
     double start1, start2, end1, end2, total1, total2;
     printf("Enter the number of nodes in the graph: ");
     scanf("%u", &nodes);
     printf("Enter the number of edges in the graph: ");
     scanf("%lu", &edges);
+    printf("Enter the number of threads to use: ");
+    scanf("%hu", &num_threads);
+
     start1 = CLOCK();
-    srand(time(NULL));
+    omp_set_num_threads(num_threads);
     grph *graph = generate_graph(nodes, edges);
     end1 = CLOCK();
     total1 = end1 - start1;
