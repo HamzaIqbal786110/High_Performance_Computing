@@ -52,7 +52,7 @@ int main()
     printf("a result %g \n", c[7][8]); /* prevent dead code elimination */
     printf("The total time for matrix multiplication with dense matrices = %f ms\n",
     total);
-    return 0;
+   
     /* initialize a sparse matrix */
     num_zeros = 0;
     for(i=0; i<N; i++)
