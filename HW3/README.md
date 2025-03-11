@@ -24,10 +24,10 @@ matmul.c
     gcc matmul.c -o matmul
     ./matmul.c
 
-acc_matmul.c
+accelerated_matmul.c
     Make sure you are on a cascadelake node otherwise AVX wont work
-    gcc acc_matmul.c -fopenmp -mavx512f -O3 -march=native -o acc_matmul
-    ./acc_matmul
+    gcc accelerated_matmul.c -fopenmp -mavx512f -O3 -march=native -o accelerated_matmul
+    ./accelerated_matmul
     - Note: Based on the cache heirarchy it will work best if the CACHE_SIZE definition at the top is modified to match.
 
 blas_simple.c
