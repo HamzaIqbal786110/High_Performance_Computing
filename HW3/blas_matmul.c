@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <cblas.h>
 #define N 256
 #define LOOPS 10
 
@@ -14,9 +15,9 @@ double CLOCK()
 
 int main()
 {
-    double a[N][N]; /* input matrix */
-    double b[N][N]; /* input matrix */
-    double c[N][N]; /* result matrix */
+    float *a = (float*)malloc(N * N * sizeof(float)); /* input matrix */
+    float *b = (float*)malloc(N * N * sizeof(float)); /* input matrix */
+    float *c = (float*)malloc(N * N * sizeof(float)); /* result matrix */
     int i,j,k,l, num_zeros;
     double start, finish, total;
     
@@ -25,31 +26,22 @@ int main()
     {
         for(j=0; j<N; j++)
         {
-            a[i][j] = (double)(i+j);
-            b[i][j] = (double)(i-j);
+            a[i * N + j] = (float)(i+j);
+            b[i * N + j] = (float)(i-j);
         }
     }
     
     printf("starting dense matrix multiply \n");
     
     start = CLOCK();
-    for (l=0; l<LOOPS; l++) 
+    for(int i = 0; i < LOOPS; i++)
     {
-        for(i=0; i<N; i++)
-        {
-            for(j=0; j<N; j++)
-            {
-                c[i][j] = 0.0;
-                for(k=0; k<N; k++)
-                {
-                    c[i][j] = c[i][j] + a[i][k] * b[k][j];
-                }
-            }
-        }
+        cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, N, N, N, 1.0f, a, N, b,
+        N, 0.0f, c, N);
     }
     finish = CLOCK();
     total = finish-start;
-    printf("a result %g \n", c[7][8]); /* prevent dead code elimination */
+    printf("a result %g \n", c[7 * N + 8]); /* prevent dead code elimination */
     printf("The total time for matrix multiplication with dense matrices = %f ms\n",
     total);
    
@@ -61,14 +53,14 @@ int main()
         {
             if ((i<j)&&(i%2>0))
             {
-                a[i][j] = (double)(i+j);
-                b[i][j] = (double)(i-j);
+                a[i * N + j] = (double)(i+j);
+                b[i * N + j] = (double)(i-j);
             }
             else
             {
                 num_zeros++;
-                a[i][j] = 0.0;
-                b[i][j] = 0.0;
+                a[i * N + j] = 0.0;
+                b[i * N + j] = 0.0;
             }
         }
     }
@@ -78,22 +70,13 @@ int main()
     start = CLOCK();
     for (l=0; l<LOOPS; l++) 
     {
-        for(i=0; i<N; i++)
-        {
-            for(j=0; j<N; j++)
-            {
-                c[i][j] = 0.0;
-                for(k=0; k<N; k++)
-                {
-                    c[i][j] = c[i][j] + a[i][k] * b[k][j];
-                }
-            }
-        }
+        cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, N, N, N, 1.0f, a, N, b,
+        N, 0.0f, c, N);
     }
     finish = CLOCK();
     
     total = finish-start;
-    printf("A result %g \n", c[7][8]); /* prevent dead code elimination */
+    printf("A result %g \n", c[7 * N + 8]); /* prevent dead code elimination */
     printf("The total time for matrix multiplication with sparse matrices = %f ms\n",
     total);
     printf("The sparsity of the a and b matrices = %f \n", (float)num_zeros/(float)

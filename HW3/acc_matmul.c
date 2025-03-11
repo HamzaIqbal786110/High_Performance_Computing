@@ -4,7 +4,7 @@
 #include <x86intrin.h>
 #include <omp.h>
 
-#define N 512
+#define N 256
 #define LOOPS 10
 #define CACHE_SIZE 1887000 / 56 //Approxmately
 
