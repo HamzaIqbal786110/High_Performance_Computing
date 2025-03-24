@@ -1,0 +1,62 @@
+BallsBalls2Count = 0 from process 0 at node c0744
+BallsBalls2Count = 1 from process 1 at node c0744
+BallsBalls2Count = 2 from process 2 at node c0744
+BallsBalls2Count = 3 from process 3 at node c0744
+BallsBalls2Count = 4 from process 4 at node c0744
+BallsBalls2Count = 5 from process 5 at node c0744
+BallsBalls2Count = 6 from process 6 at node c0744
+BallsBalls2Count = 7 from process 7 at node c0744
+BallsBalls2Count = 8 from process 8 at node c0744
+BallsBalls2Count = 9 from process 9 at node c0744
+BallsBalls2Count = 10 from process 10 at node c0744
+BallsBalls2Count = 11 from process 11 at node c0744
+BallsBalls2Count = 12 from process 12 at node c0744
+BallsBalls2Count = 13 from process 13 at node c0744
+BallsBalls2Count = 14 from process 14 at node c0744
+BallsBalls2Count = 15 from process 15 at node c0744
+BallsBalls2Count = 16 from process 16 at node c0745
+BallsBalls2Count = 17 from process 17 at node c0745
+BallsBalls2Count = 18 from process 18 at node c0745
+BallsBalls2Count = 19 from process 19 at node c0745
+BallsBalls2Count = 20 from process 20 at node c0745
+BallsBalls2Count = 21 from process 21 at node c0745
+BallsBalls2Count = 22 from process 22 at node c0745
+BallsBalls2Count = 23 from process 23 at node c0745
+BallsBalls2Count = 24 from process 24 at node c0745
+BallsBalls2Count = 25 from process 25 at node c0745
+BallsBalls2Count = 26 from process 26 at node c0745
+BallsBalls2Count = 27 from process 27 at node c0745
+BallsBalls2Count = 28 from process 28 at node c0745
+BallsBalls2Count = 29 from process 29 at node c0745
+BallsBalls2Count = 30 from process 30 at node c0745
+BallsBalls2Count = 31 from process 31 at node c0745
+BallsBalls2Count = 32 from process 32 at node c0746
+BallsBalls2Count = 33 from process 33 at node c0746
+BallsBalls2Count = 34 from process 34 at node c0746
+BallsBalls2Count = 35 from process 35 at node c0746
+BallsBalls2Count = 36 from process 36 at node c0746
+BallsBalls2Count = 37 from process 37 at node c0746
+BallsBalls2Count = 38 from process 38 at node c0746
+BallsBalls2Count = 39 from process 39 at node c0746
+BallsBalls2Count = 40 from process 40 at node c0746
+BallsBalls2Count = 41 from process 41 at node c0746
+BallsBalls2Count = 42 from process 42 at node c0746
+BallsBalls2Count = 43 from process 43 at node c0746
+BallsBalls2Count = 44 from process 44 at node c0746
+BallsBalls2Count = 45 from process 45 at node c0746
+BallsBalls2Count = 46 from process 46 at node c0746
+BallsBalls2Count = 47 from process 47 at node c0746
+BallsBalls2Count = 48 from process 48 at node c0747
+BallsBalls2Count = 49 from process 49 at node c0747
+BallsBalls2Count = 50 froslurmstepd: error: *** JOB 108576 ON c0744 CANCELLED AT 2025-03-24T00:15:59 DUE TO TIME LIMIT ***
+--------------------------------------------------------------------------
+ORTE has lost communication with a remote daemon.
+
+  HNP daemon   : [[43208,0],0] on node c0744
+  Remote daemon: [[43208,0],1] on node c0745
+
+This is usually due to either a failure of the TCP network
+connection to the node, or possibly an internal failure of
+the daemon itself. We cannot recover from this failure, and
+therefore will terminate the job.
+--------------------------------------------------------------------------
