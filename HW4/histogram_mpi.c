@@ -5,7 +5,7 @@
 
 #define NUM_RANDS 8000000
 #define RAND_RANGE 100000
-#define NUM_BINS 32
+#define NUM_BINS 100
 
 double CLOCK() 
 {
