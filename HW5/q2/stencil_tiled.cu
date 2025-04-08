@@ -3,7 +3,7 @@
 #include <time.h>
 #include <cuda_runtime.h>
 
-#define BLOCK_SIZE 12
+#define BLOCK_SIZE 10
 // ORIGINAL ALGORITHM
 // float a[n][n][n], b[n][n][n];
 // for (i=1; i<n-1; i++)
@@ -36,7 +36,7 @@ __global__ void stencil_tiled(float *a, float* b, int n)
     int tz = threadIdx.z + 1;
     int idx = (i * n * n) + (j * n) + k;
 
-    __shared__ float tile[BLOCK_SIZE + 2][BLOCK_SIZE + 2][BLOCK_SIZE + 2 + 1];
+    __shared__ float tile[BLOCK_SIZE + 2][BLOCK_SIZE + 2][BLOCK_SIZE + 2];
 
     if (i < n && j < n && k < n) 
     {
