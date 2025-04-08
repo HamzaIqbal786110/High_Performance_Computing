@@ -19,3 +19,13 @@ module load cuda
 nvcc stencil.cu -o stencil
 nvcc stencil_tiled.cu -o stencil_tiled
 sbatch runq2.sbatch
+
+
+
+Bonus
+cd bonus
+module load cuda
+nvcc cuda_leibniz_dp.cu -arch=sm_60 -o cuda_leibniz_dp
+nvcc cuda_leibniz_sp.cu -arch=sm_60 -o cuda_leibniz_sp
+sbatch run_leibniz.sbatch
+
