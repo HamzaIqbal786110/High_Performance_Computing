@@ -1,0 +1,143 @@
+CUDA π Benchmark (Double vs Single Precision)
+=============================================
+
+===== Running DOUBLE PRECISION: n_iter = 1024 =====
+Computed Value of PI with 1024 iterations: 3.1406160913
+GPU Time Taken: 395.0571 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 1024 =====
+Computed Value of PI (float) with 1024 iterations: 3.1406162
+GPU Time Taken: 328.2900 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 2048 =====
+Computed Value of PI with 2048 iterations: 3.1411043724
+GPU Time Taken: 236.8408 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 2048 =====
+Computed Value of PI (float) with 2048 iterations: 3.1411018
+GPU Time Taken: 233.4974 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 4096 =====
+Computed Value of PI with 4096 iterations: 3.1413485130
+GPU Time Taken: 224.4352 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 4096 =====
+Computed Value of PI (float) with 4096 iterations: 3.1413527
+GPU Time Taken: 226.3231 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 8192 =====
+Computed Value of PI with 8192 iterations: 3.1414705833
+GPU Time Taken: 230.4751 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 8192 =====
+Computed Value of PI (float) with 8192 iterations: 3.1414733
+GPU Time Taken: 214.9720 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 16384 =====
+Computed Value of PI with 16384 iterations: 3.1415316184
+GPU Time Taken: 203.9978 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 16384 =====
+Computed Value of PI (float) with 16384 iterations: 3.1415317
+GPU Time Taken: 207.0785 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 32768 =====
+Computed Value of PI with 32768 iterations: 3.1415621360
+GPU Time Taken: 207.5877 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 32768 =====
+Computed Value of PI (float) with 32768 iterations: 3.1415646
+GPU Time Taken: 203.9873 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 65536 =====
+Computed Value of PI with 65536 iterations: 3.1415773948
+GPU Time Taken: 204.4996 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 65536 =====
+Computed Value of PI (float) with 65536 iterations: 3.1415744
+GPU Time Taken: 205.9238 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 131072 =====
+Computed Value of PI with 131072 iterations: 3.1415850242
+GPU Time Taken: 203.4277 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 131072 =====
+Computed Value of PI (float) with 131072 iterations: 3.1415901
+GPU Time Taken: 203.1903 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 262144 =====
+Computed Value of PI with 262144 iterations: 3.1415888389
+GPU Time Taken: 209.7090 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 262144 =====
+Computed Value of PI (float) with 262144 iterations: 3.1415882
+GPU Time Taken: 210.3001 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 524288 =====
+Computed Value of PI with 524288 iterations: 3.1415907462
+GPU Time Taken: 203.8297 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 524288 =====
+Computed Value of PI (float) with 524288 iterations: 3.1415858
+GPU Time Taken: 207.4610 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 1048576 =====
+Computed Value of PI with 1048576 iterations: 3.1415916999
+GPU Time Taken: 209.4604 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 1048576 =====
+Computed Value of PI (float) with 1048576 iterations: 3.1415915
+GPU Time Taken: 203.4228 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 2097152 =====
+Computed Value of PI with 2097152 iterations: 3.1415921768
+GPU Time Taken: 210.8672 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 2097152 =====
+Computed Value of PI (float) with 2097152 iterations: 3.1415918
+GPU Time Taken: 213.1269 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 4194304 =====
+Computed Value of PI with 4194304 iterations: 3.1415924152
+GPU Time Taken: 225.4310 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 4194304 =====
+Computed Value of PI (float) with 4194304 iterations: 3.1415975
+GPU Time Taken: 217.1469 ms
+-------------------------------------------------
+
+===== Running DOUBLE PRECISION: n_iter = 8388608 =====
+Computed Value of PI with 8388608 iterations: 3.1415925344
+GPU Time Taken: 234.8723 ms
+-------------------------------------------------
+
+===== Running SINGLE PRECISION: n_iter = 8388608 =====
+Computed Value of PI (float) with 8388608 iterations: 3.1415925
+GPU Time Taken: 232.5535 ms
+-------------------------------------------------
+
