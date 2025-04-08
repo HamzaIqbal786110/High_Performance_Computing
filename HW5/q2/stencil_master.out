@@ -1,0 +1,10 @@
+===== Running Naive Stencil: N = 16 =====
+===== Running Tiled Stencil: N = 16 =====
+===== Running Naive Stencil: N = 32 =====
+===== Running Tiled Stencil: N = 32 =====
+===== Running Naive Stencil: N = 64 =====
+===== Running Tiled Stencil: N = 64 =====
+===== Running Naive Stencil: N = 128 =====
+===== Running Tiled Stencil: N = 128 =====
+===== Running Naive Stencil: N = 256 =====
+===== Running Tiled Stencil: N = 256 =====

@@ -3,7 +3,6 @@
 #include <time.h>
 #include <cuda_runtime.h>
 
-#define N 32
 
 // ORIGINAL ALGORITHM
 // float a[n][n][n], b[n][n][n];
@@ -28,9 +27,9 @@ double CLOCK()
 
 __global__ void stencil(float *a, float* b, int n)
 {
-    int i = blockIdx.x + blockDim.x + threadIdx.x;
-    int j = blockIdx.y + blockDim.y + threadIdx.y;
-    int k = blockIdx.z + blockDim.z + threadIdx.z;
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+    int k = blockIdx.z * blockDim.z + threadIdx.z;
     int idx = (i * n * n) + (j * n) + k;
     if (i > 0 && i < n-1 && j > 0 && j < n-1 && k > 0 && k < n-1)
     {
@@ -49,45 +48,61 @@ __global__ void stencil(float *a, float* b, int n)
 int main(int argc, char *argv[])
 {
 
-    double start, end, time_taken;
-    
-    float* a;
-    int* results = (int*)calloc(NUM_BINS, sizeof(int));
-   
-    int NUM_RANDS = 8388608;
-    if (argc > 1) NUM_RANDS = atoi(argv[1]);
-
-    nums = (int*)malloc(sizeof(int) * NUM_RANDS);
-    srand(time(NULL));
-    for(int i = 0; i < NUM_RANDS; i++)
-    {
-        nums[i] = (rand() % RAND_RANGE) + 1;
+    if (argc < 2) {
+        printf("Usage: %s <N>\n", argv[0]);
+        return 1;
     }
 
+    int n = atoi(argv[1]);
+    size_t total_elems = n * n * n;
+    size_t total_bytes = total_elems * sizeof(float);
 
-    start = CLOCK();
-    int *nums_d, *results_d;
-    cudaMalloc(&nums_d, NUM_RANDS * sizeof(int));
-    cudaMalloc(&results_d, NUM_BINS * sizeof(int));
-    cudaMemcpy(nums_d, nums, NUM_RANDS * sizeof(int), cudaMemcpyHostToDevice);
-    cudaMemset(results_d, 0, NUM_BINS * sizeof(int));
+    // Host memory allocation
+    float *a_h = (float*)malloc(total_bytes);
+    float *b_h = (float*)malloc(total_bytes);
 
-    int grid_size = (NUM_RANDS + BLOCK_SIZE - 1) / BLOCK_SIZE;
-    int total_threads = grid_size * BLOCK_SIZE;
-    int nums_per_thread = (NUM_RANDS + total_threads - 1) / total_threads;
-    binner<<<grid_size, BLOCK_SIZE>>>(nums_d, results_d, nums_per_thread, NUM_RANDS);
+    // Initialize b_h with random floats
+    for (size_t i = 0; i < total_elems; i++) {
+        b_h[i] = (float)(rand()) / RAND_MAX;
+    }
+
+    // Device memory allocation
+    double start = CLOCK();
+
+    float *a_d, *b_d;
+    cudaMalloc(&a_d, total_bytes);
+    cudaMalloc(&b_d, total_bytes);
+
+    // Copy b to device
+    cudaMemcpy(b_d, b_h, total_bytes, cudaMemcpyHostToDevice);
+    cudaMemset(a_d, 0, total_bytes);
+
+    // Kernel launch configuration
+    dim3 blockDim(8, 8, 8);
+    dim3 gridDim((n + blockDim.x - 1) / blockDim.x,
+                 (n + blockDim.y - 1) / blockDim.y,
+                 (n + blockDim.z - 1) / blockDim.z);
+
+    
+
+    // Launch the kernel
+    stencil<<<gridDim, blockDim>>>(a_d, b_d, n);
     cudaDeviceSynchronize();
-    cudaMemcpy(results, results_d, NUM_BINS * sizeof(int), cudaMemcpyDeviceToHost);
 
-    end = CLOCK();
-   
-    for(int i = 0; i < NUM_BINS; i++)
-    {
-        printf("Bin %i = %i\n", i, results[i]);
-    }
-    
-    time_taken = end - start;
+    ;
 
-    printf("Time taken = %f ms \n", time_taken);
-    return(0);
+    // Copy result back
+    cudaMemcpy(a_h, a_d, total_bytes, cudaMemcpyDeviceToHost);
+
+    // Print a small slice for verification (optional)
+    printf("a[n/2][n/2][n/2] = %f\n", a_h[(n/2)*n*n + (n/2)*n + (n/2)]);
+    double end = CLOCK();
+    printf("GPU time for N = %d: %f ms\n", n, end - start);
+    // Free memory
+    cudaFree(a_d);
+    cudaFree(b_d);
+    free(a_h);
+    free(b_h);
+
+    return 0;
 }

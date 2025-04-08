@@ -1,0 +1,58 @@
+3D Stencil Benchmark (Naive vs Tiled)
+=====================================
+
+===== Running Naive Stencil: N = 16 =====
+a[n/2][n/2][n/2] = 1.785609
+GPU time for N = 16: 391.944429 ms
+----------------------------------------
+
+===== Running Tiled Stencil: N = 16 =====
+Running stencil with N = 16, BLOCK_SIZE = 12
+Sample value: a[n/2][n/2][n/2] = 0.000000
+GPU time for N = 16 and BLOCK_SIZE = 12: 394.668208 ms
+----------------------------------------
+
+===== Running Naive Stencil: N = 32 =====
+a[n/2][n/2][n/2] = 1.825965
+GPU time for N = 32: 271.133740 ms
+----------------------------------------
+
+===== Running Tiled Stencil: N = 32 =====
+Running stencil with N = 32, BLOCK_SIZE = 12
+Sample value: a[n/2][n/2][n/2] = 0.000000
+GPU time for N = 32 and BLOCK_SIZE = 12: 230.591418 ms
+----------------------------------------
+
+===== Running Naive Stencil: N = 64 =====
+a[n/2][n/2][n/2] = 2.354346
+GPU time for N = 64: 229.303724 ms
+----------------------------------------
+
+===== Running Tiled Stencil: N = 64 =====
+Running stencil with N = 64, BLOCK_SIZE = 12
+Sample value: a[n/2][n/2][n/2] = 0.000000
+GPU time for N = 64 and BLOCK_SIZE = 12: 225.932330 ms
+----------------------------------------
+
+===== Running Naive Stencil: N = 128 =====
+a[n/2][n/2][n/2] = 1.292548
+GPU time for N = 128: 211.270675 ms
+----------------------------------------
+
+===== Running Tiled Stencil: N = 128 =====
+Running stencil with N = 128, BLOCK_SIZE = 12
+Sample value: a[n/2][n/2][n/2] = 0.000000
+GPU time for N = 128 and BLOCK_SIZE = 12: 215.006145 ms
+----------------------------------------
+
+===== Running Naive Stencil: N = 256 =====
+a[n/2][n/2][n/2] = 2.710558
+GPU time for N = 256: 251.358985 ms
+----------------------------------------
+
+===== Running Tiled Stencil: N = 256 =====
+Running stencil with N = 256, BLOCK_SIZE = 12
+Sample value: a[n/2][n/2][n/2] = 0.000000
+GPU time for N = 256 and BLOCK_SIZE = 12: 246.362526 ms
+----------------------------------------
+
